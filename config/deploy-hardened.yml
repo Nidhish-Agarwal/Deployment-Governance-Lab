@@ -1,0 +1,58 @@
+# This file demonstrates recommended production environment deployment configuration
+# This is NOT the broken configuration -- see .github/workflows/deploy.yml for the actual lab
+
+name: Deploy Checkout Service - HARDENED
+
+on:
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    
+    # Environment protection rules enforce approval workflow
+    environment:
+      name: production
+      url: https://checkout.example.com
+
+    # Principle of least privilege
+    permissions:
+      contents: read
+      id-token: write
+      deployments: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build application
+        run: npm run build
+
+      - name: Deploy to production
+        env:
+          # Environment-scoped secrets are only available for the 'production' environment
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+        run: |
+          echo "Deploying from branch: ${{ github.ref }}"
+          echo "Deployment ID: ${{ github.run_id }}"
+          echo "Deployer: ${{ github.actor }}"
+          echo "Production deployment completed successfully"
+
+      - name: Verify deployment
+        run: |
+          echo "Verifying production deployment"
+          echo "Health check: OK"

@@ -1,0 +1,21 @@
+{
+  "name": "checkout-service",
+  "version": "1.0.0",
+  "description": "A simple checkout service for the Deployment Governance Lab",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "build": "echo 'Build complete'",
+    "test": "echo 'Tests passed'"
+  },
+  "keywords": [
+    "checkout",
+    "e-commerce",
+    "payment"
+  ],
+  "author": "Cloud Computing Lab",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
