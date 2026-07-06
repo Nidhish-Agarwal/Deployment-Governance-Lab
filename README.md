@@ -39,12 +39,8 @@ The repository simulates a real-world scenario where a team has built a CI/CD pi
       └── deploy.yml          # BROKEN deployment workflow
 src/
   └── app.js                  # Simple Node.js checkout service
-config/
-  ├── governance-patterns.md  # Reference patterns and best practices
-  └── deploy-hardened.yml     # Example hardened workflow (reference)
 docs/
   ├── audit-guide.md          # Your task checklist
-  ├── instructor-guide.md     # Solutions (instructors only)
   └── student-notes.md        # Space for your findings
 package.json                  # Application dependencies
 README.md                     # This file
@@ -276,15 +272,6 @@ A: Branch protection rules prevent direct pushes to `main`. Environment rules pr
 **Problem: Secrets not accessible in deployment step**
 - Verify they're configured in Settings → Environments → production → Environment secrets
 - Verify job uses `environment: production`
-
-## Reference Materials
-
-See `config/governance-patterns.md` for:
-
-- Complete governance pattern reference
-- Deployment approval workflow diagram
-- Common governance weaknesses and fixes
-- Validation checklist
 
 ## Next Steps (After Completing Lab)
 
