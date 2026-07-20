@@ -4,6 +4,8 @@
 
 After completing this lab, you will:
 
+changes here
+
 - Understand how GitHub Environments protect production deployments
 - Configure environment-level deployment approval workflows
 - Implement branch restrictions for production deployments
@@ -105,11 +107,13 @@ Document your findings in `docs/student-notes.md`:
 # Audit Findings
 
 ## Weakness 1: [Description]
+
 - Risk: [What could go wrong?]
 - Evidence: [Where did you find this in the code/settings?]
 - Fix: [How would you address this?]
 
 ## Weakness 2: [Description]
+
 ...
 ```
 
@@ -257,19 +261,23 @@ A: Branch protection rules prevent direct pushes to `main`. Environment rules pr
 ## Troubleshooting
 
 **Problem: Workflow doesn't pause for approval**
+
 - Verify `environment: production` is in the workflow
 - Verify production environment exists in Settings → Environments
 - Verify you have at least 2 required reviewers configured
 
 **Problem: Can't find "Review deployments" button**
+
 - You must be configured as a required reviewer
 - Check Settings → Environments → production → Required reviewers
 
 **Problem: Approval prompt disappeared**
+
 - Approval workflow may have timed out (default 30 days)
 - Trigger the workflow again
 
 **Problem: Secrets not accessible in deployment step**
+
 - Verify they're configured in Settings → Environments → production → Environment secrets
 - Verify job uses `environment: production`
 
