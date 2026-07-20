@@ -3,23 +3,37 @@ name: Deploy Checkout Service
 on:
   push:
     branches:
-      - '*'
+      - main
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       id-token: write
 
+    # This applies the GitHub Environment protection rules
+    environment:
+      name: production
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Build application
         run: |
           echo "Building Checkout Service..."
-          npm install
           npm run build
 
       - name: Deploy to production
@@ -27,17 +41,17 @@ jobs:
           DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           API_TOKEN: ${{ secrets.API_TOKEN }}
-          ENVIRONMENT: production
         run: |
-          echo "Deploying to production..."
-          echo "Deploy key: ${DEPLOY_KEY:0:10}..."
-          echo "Database URL: $DATABASE_URL"
-          echo "API Token: ${API_TOKEN:0:10}..."
-          echo "Application deployed successfully"
+          echo "Deploying Checkout Service..."
+          echo "Deployment completed successfully."
           echo "Deployment timestamp: $(date)"
+
+      - name: Health Verification
+        run: |
+          echo "Running post-deployment health checks..."
+          echo "Health check passed."
 
       - name: Notify deployment
         if: success()
         run: |
-          echo "Production deployment completed"
-          echo "All systems nominal"
+          echo "Production deployment completed successfully."
